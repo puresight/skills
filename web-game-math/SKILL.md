@@ -1,49 +1,44 @@
 ---
-name: "web-game-math"
-description: "Use when implementing 2D/3D geometry, vectors, matrices, raycasts, coordinate transformations, angles, or spatial queries in browser games. Covers gl-matrix, distance calculations, rotations, and spatial indexing. Does not apply to full rigid-body dynamics or pure UI CSS positioning."
+name: web-game-math
+description: "Use when implementing 2D or 3D geometry, vectors, matrices, quaternions, raycasts, coordinate transforms, angles, distance checks, or spatial queries in browser games. Prefers Three.js math classes when React Three Fiber is in use; otherwise uses gl-matrix. Covers destination-passing style, squared distances, proper angle handling, and spatial indexing. Does not apply to full rigid-body dynamics or pure UI CSS positioning."
 ---
 
 # Web Game Math & Spatial Invariants
 
-Enforce strict mathematical determinism across all game logic running in the browser and WebContainers.
+Enforce deterministic, allocation-light math. Never hand-write vector, matrix, or quaternion arithmetic.
 
-## 1. Vector & Matrix Operations
+## Preferred math source
+- When the project already uses Three.js / React Three Fiber: prefer `THREE.Vector2/3/4`, `THREE.Quaternion`, `THREE.Matrix3/4`, `THREE.MathUtils`, `THREE.Ray`, `THREE.Box3`, `THREE.Sphere`, and related classes.
+- Otherwise (or for pure 2D Canvas games): use `gl-matrix` with destination-passing style.
+- Optional helpers: `maath` for extra distributions, buffers, or geometry utilities when working with Three.
+- Never reimplement addition, subtraction, dot, cross, normalize, multiply, or slerp.
 
-- NEVER hand-write arithmetic for vector addition, dot products, cross products, normalization, or matrix multiplication.
-- ALWAYS install and import `gl-matrix` for all spatial math:
-
+## gl-matrix usage (when chosen)
 ```bash
 pnpm add gl-matrix
-
 ```
-
 ```typescript
-import { vec2, mat2d } from "gl-matrix";
+import { vec2, vec3, mat2d, quat } from "gl-matrix";
 ```
+- Always pass a destination: `vec2.sub(out, a, b)` — never allocate new objects in hot paths.
 
-- Use destination-passing style to minimize garbage collection pauses:
-- Good: `vec2.sub(outVec, targetPos, currentPos);`
-- Bad: `const outVec = { x: targetPos.x - currentPos.x, y: targetPos.y - currentPos.y };`
+## Distance & range
+- Prefer squared distance (`vec2.sqrDist` / `vec3.sqrLen` / equivalent) for threshold checks.
+- Avoid `Math.sqrt` inside loops unless the actual distance value is required.
 
-## 2. Distance and Range Checks
+## Angles & rotation
+- Normalize vectors before trig.
+- Use `Math.atan2(dy, dx)` for headings.
+- Interpolate rotations with quaternion slerp (`quat.slerp` or `THREE.Quaternion.slerp`) or proper angular wrapping. Never lerp raw angles across the 0/2π boundary.
 
-- Never calculate Euclidean distance via `Math.sqrt(dx*dx + dy*dy)` inside hot loops if checking thresholds.
-- Use squared distance checks (`vec2.sqrDist(a, b) < threshold * threshold`) to eliminate unnecessary square-root computations.
-
-## 3. Angle Calculations and Interpolation
-
-- Always normalize vectors before calling trigonometric operations.
-- Use `Math.atan2(dy, dx)` instead of `Math.atan()` for heading angles to avoid division-by-zero on vertical axes.
-- Interpolate rotations using `quat.slerp` or angular difference wrapping logic; never linearly interpolate (`lerp`) raw angles across the 0 / 2π boundary.
-
-## 4. Spatial Indexing
-
-- For any scene with more than 30 dynamic or queryable entities, reject nested $O(n^2)$ loops.
-- Install `rbush` or `kdbush` to index entity bounding boxes:
-
+## Spatial indexing
+- For scenes with more than ~30 dynamic or queryable entities, avoid O(n²) nested loops.
+- Use `rbush` (or `kdbush`) for broad-phase bounding-box queries, then run precise tests only on candidates.
 ```bash
 pnpm add rbush
-
 ```
 
-- Query candidate collisions via the spatial index broadphase before running precise geometric tests.
+## General rules
+- Keep heavy math in plain TypeScript modules outside the React render path.
+- Reuse results and temporary vectors across frames when possible.
+- Stay consistent within a project: pick Three math or gl-matrix and stick to it.
