@@ -1,3 +1,8 @@
+---
+name: "web-game-loop-architecture"
+description: "Use when architecting game loops, managing input polling, handling delta-time integration, or syncing physics state to renderers like Canvas or PixiJS. Covers fixed time-stepping, state interpolation, and tick decoupling. Does not apply to turn-based or non-realtime web applications."
+---
+
 # Real-Time Game Loop & State Architecture
 
 Ensure robust decoupling between the simulation update frequency and display refresh rate.

@@ -1,3 +1,8 @@
+---
+name: "web-game-physics-2d"
+description: "Use when adding rigid-body physics, gravity, friction, restitution, collision impulses, or kinematic movement to a web game. Covers Matter.js and @dimforge/rapier2d-compat in WebContainers. Does not apply to purely cosmetic animations or static board games."
+---
+
 # 2D Physics in WebContainers
 
 Offload collision detection, resolution, and dynamics to vetted libraries compatible with WebContainer sandboxes.

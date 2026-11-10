@@ -1,4 +1,0 @@
-{
-  "name": "web-game-math",
-  "description": "Use when implementing 2D/3D geometry, vectors, matrices, raycasts, coordinate transformations, angles, or spatial queries in browser games. Covers gl-matrix, distance calculations, rotations, and spatial indexing. Does not apply to full rigid-body dynamics or pure UI CSS positioning."
-}
