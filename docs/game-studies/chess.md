@@ -23,7 +23,7 @@
 - Camera rotates to active player's seat (toggleable); top-down "analysis view".
 
 ## 5. Tech notes
-- Skills: `web-game-3d`, `web-game-lowpoly-3d`, `web-game-3d-assets`, `web-game-chess`, `web-game-hotseat-multiplayer`, `web-game-state-machine`, `web-game-persistence`, `web-game-audio`.
+- Skills: `web-game-3d`, `web-game-3d/style.md`, `web-game-3d/assets.md`, `web-game-chess`, `web-game-board/hotseat.md`, `web-game-core/state-machine.md`, `web-game-core/persistence.md`, `web-game-core/audio.md`.
 - Assets: Omies 3D Chess/Checkers Set (itch.io) — licensed, keep out of public repo; record in `CREDITS.md`.
 - Bonus: same asset set enables a checkers mode (custom rules module).
 

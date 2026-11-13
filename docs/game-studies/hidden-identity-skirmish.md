@@ -33,7 +33,7 @@ Change ≥3 axes:
 - Remembered enemy ranks: small floating marker on revealed units.
 
 ## 5. Tech notes
-- Skills: `web-game-board-3d` (per-player views, grid), `web-game-hotseat-multiplayer` (**mandatory** pass-the-device screen — hidden info), `web-game-state-machine` (setup → play → reveal → resolve), `web-game-3d`, `web-game-lowpoly-3d`.
+- Skills: `web-game-board` (per-player views, grid), `web-game-board/hotseat.md` (**mandatory** pass-the-device screen — hidden info), `web-game-core/state-machine.md` (setup → play → reveal → resolve), `web-game-3d`, `web-game-3d/style.md`.
 - Hotseat privacy: when the screen hands off, all units must render as backs until the new player confirms "I'm ready".
 - Single source of truth holds true ranks; the renderer gets a **redacted view** for the viewing player.
 - Rules module is small: write with unit tests.

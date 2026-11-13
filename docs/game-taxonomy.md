@@ -5,8 +5,8 @@ Classifications help pick the right skills, architecture, and design precedents.
 ## 1. By time model
 | Model | Examples | Architecture |
 |---|---|---|
-| Real-time | Arcade, platformers | Fixed-timestep loop (`web-game-loop-architecture`) |
-| Turn-based | Chess, Risk-like, Stratego-like | State machine + animations (`web-game-state-machine`) |
+| Real-time | Arcade, platformers | Fixed-timestep loop (`web-game-core/loop.md`) |
+| Turn-based | Chess, Risk-like, Stratego-like | State machine + animations (`web-game-core/state-machine.md`) |
 | Simultaneous turns | Diplomacy-style orders | Collect hidden orders, resolve together |
 | Real-time with pause | Some strategy games | Loop + pausable phase |
 
@@ -16,7 +16,7 @@ Classifications help pick the right skills, architecture, and design precedents.
 | **Deterministic** | Chess, checkers, Go | Stratego-like (hidden ranks) |
 | **Stochastic** | Backgammon | Risk-like (dice + hidden cards), poker |
 
-This matters technically: imperfect-information games need **per-player views** of state (see `web-game-board-3d`), and hotseat play needs a handoff screen.
+This matters technically: imperfect-information games need **per-player views** of state (see `web-game-board`), and hotseat play needs a handoff screen.
 
 ## 3. By board / space topology
 | Topology | Examples | Data structure |

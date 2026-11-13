@@ -27,11 +27,11 @@
 - **Distance check**: no 2600-identical palette of the original's screens, no crocodile-head bridges as signature set-piece, different hazards roster, no ripped sounds.
 
 ## 4. Look options
-- **Faithful-era 2D**: native ~160×192 or 320×200 canvas, integer scaling, limited palette (`retro-arcade-fidelity`, `web-game-canvas-2d`).
+- **Faithful-era 2D**: native ~160×192 or 320×200 canvas, integer scaling, limited palette (`web-game-2d/retro-arcade.md`, `web-game-2d/canvas.md`).
 - **2.5D**: low-poly 3D world on rails with side-view camera (side-scroller in R3F) — practices 3D while keeping 2D gameplay.
 
 ## 5. Tech notes
-- Skills: `web-game-platformer-2d` (core movement), `web-game-canvas-2d`, `web-game-loop-architecture`, `web-game-input`, `web-game-audio`, `retro-arcade-fidelity`, `web-game-math` (seeded generator).
+- Skills: `web-game-platformer` (core movement), `web-game-2d/canvas.md`, `web-game-core/loop.md`, `web-game-core/input.md`, `web-game-core/audio.md`, `web-game-2d/retro-arcade.md`, `web-game-core/math.md` (seeded generator).
 - Room generation: seeded PRNG/LFSR → room descriptor (bits pick pit type, tree pattern, ladder, hazard, treasure). Deterministic = testable and shareable.
 - Timer and score in HUD; treasure count; minimap of visited rooms.
 

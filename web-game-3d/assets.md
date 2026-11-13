@@ -1,8 +1,3 @@
----
-name: web-game-3d-assets
-description: "Use when importing third-party or Blockbench 3D models (itch.io packs, Kenney, Quaternius, Sketchfab, purchased asset sets) into a React Three Fiber game: choosing formats (GLB, glTF, FBX, OBJ), converting to GLB, inspecting node/mesh names, generating typed components with gltfjsx, normalizing scale/pivot/orientation, sharing materials, recoloring pieces, and licensing. Does not cover modeling in Blender or 2D sprites."
----
-
 # 3D Asset Pipeline (R3F)
 
 ## 1. Format rules

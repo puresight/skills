@@ -33,7 +33,7 @@
 - Overview vs detail: zoomed out shows numbers; zoomed in shows unit figures.
 
 ## 5. Tech notes
-- Skills: `web-game-board-3d` (graph maps, territory extrusion), `web-game-hotseat-multiplayer` (2–6 players, seat per player or fixed overhead camera), `web-game-state-machine` (reinforce → attack → fortify phases), `web-game-math` (seeded RNG), `web-game-persistence` (long games need save/resume).
+- Skills: `web-game-board` (graph maps, territory extrusion), `web-game-board/hotseat.md` (2–6 players, seat per player or fixed overhead camera), `web-game-core/state-machine.md` (reinforce → attack → fortify phases), `web-game-core/math.md` (seeded RNG), `web-game-core/persistence.md` (long games need save/resume).
 - Map data as JSON: `{ id, name, region, polygon: [[x,z]...], centroid, neighbors: [] }`, validated with Zod.
 - Pathfinding for fortify: BFS over owned territories.
 - Battle odds helper (show attacker win probability) — great learning UI and a direct consulting skill.

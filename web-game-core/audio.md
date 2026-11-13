@@ -1,8 +1,3 @@
----
-name: web-game-audio
-description: "Use when adding sound effects or music to a browser game: Web Audio API chip-style synthesis (square, triangle, noise), retro SFX like lasers, explosions, coins and jumps, simple sequenced jingles, autoplay unlock, volume/mute settings, and 3D positional audio in Three.js. Does not cover voice chat or streaming media."
----
-
 # Game Audio (Web Audio, chip-style)
 
 Synthesize sounds in code — no sample files needed, fully offline, era-appropriate.

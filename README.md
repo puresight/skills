@@ -1,40 +1,31 @@
-# Retro Web Game Skills
+# Retro & Tabletop Web Game Skills
 
-Agent skills (Markdown + YAML frontmatter) for building browser reproductions of 1970s–1980s arcade and console games with Bolt.new.
+Consolidated agent skills (Markdown + YAML frontmatter) for building original browser games inspired by 1970s–1980s arcade/console classics and tabletop board games in Bolt.new.
 
-**Assumed stack:** React 19 + Vite + TypeScript (strict) + Tailwind, Dexie + Zod for storage, Canvas 2D for raster games, React Three Fiber for 3D. Fully offline after load. Runs in WebContainers (no native Node modules).
+Start with [AGENTS.md](AGENTS.md) for the global stack and the **project-type → skills routing table**.
 
-## Docs
+## Skills (7)
 
-Design knowledge, principles, and game studies live in [docs/](docs/README.md): fun & design principles, game taxonomy, originality & IP, board-to-3D, visualization for consulting, gamification, and per-project studies.
+Each skill has a short `SKILL.md` (loaded when activated) plus sibling `.md` reference/template files (read on demand). All files are pure Markdown.
 
-## Skills
+| Skill | Sibling references / templates | Use for |
+|---|---|---|
+| [game-design-brief](game-design-brief/SKILL.md) | [originality.md](game-design-brief/originality.md) | Design brief, naming, IP-safe reimagining of commercial games |
+| [web-game-core](web-game-core/SKILL.md) | [loop.md](web-game-core/loop.md), [state-machine.md](web-game-core/state-machine.md), [input.md](web-game-core/input.md), [audio.md](web-game-core/audio.md), [persistence.md](web-game-core/persistence.md), [math.md](web-game-core/math.md) | Every game: 60 Hz loop, phases, input, chip audio, Dexie+Zod, math/RNG |
+| [web-game-2d](web-game-2d/SKILL.md) | [canvas.md](web-game-2d/canvas.md), [collision.md](web-game-2d/collision.md), [retro-arcade.md](web-game-2d/retro-arcade.md) | 2D raster/vector Canvas, arcade collision vs physics, arcade flow |
+| [web-game-platformer](web-game-platformer/SKILL.md) | [reference.md](web-game-platformer/reference.md) | Side-view platformers: jump feel, ladders, vines, hazards, LFSR rooms |
+| [web-game-3d](web-game-3d/SKILL.md) | [scene.md](web-game-3d/scene.md), [style.md](web-game-3d/style.md), [assets.md](web-game-3d/assets.md) | React Three Fiber scenes, low-poly/vector style, GLB asset pipeline |
+| [web-game-board](web-game-board/SKILL.md) | [boards.md](web-game-board/boards.md), [hotseat.md](web-game-board/hotseat.md) | Turn-based 3D grids, hexes, territory maps, hidden units, dice, hotseat |
+| [web-game-chess](web-game-chess/SKILL.md) | [chess-game.md](web-game-chess/chess-game.md) | Chess & checkers rules via `chess.js`, square↔world mapping, PGN |
 
-| Skill | Use for |
-|---|---|
-| [game-design-originality](game-design-originality/SKILL.md) | Start here for any game inspired by a commercial title: design brief, naming, IP-safe reimagining |
-| [retro-arcade-fidelity](retro-arcade-fidelity/SKILL.md) | Start here for any retro remake: spec, resolution, palette, arcade flow, IP |
-| [web-game-loop-architecture](web-game-loop-architecture/SKILL.md) | Fixed-timestep loop, React/R3F integration, pause |
-| [web-game-state-machine](web-game-state-machine/SKILL.md) | Screens and turn phases |
-| [web-game-input](web-game-input/SKILL.md) | Keyboard, gamepad, touch, pointer picking, 2P keys |
-| [web-game-canvas-2d](web-game-canvas-2d/SKILL.md) | Pixel-perfect 2D rendering, sprites, tilemaps, vector glow |
-| [web-game-physics-2d](web-game-physics-2d/SKILL.md) | Arcade collision vs rigid-body engines |
-| [web-game-math](web-game-math/SKILL.md) | Vectors, angles, spatial indexing |
-| [web-game-3d](web-game-3d/SKILL.md) | R3F scenes, cameras, picking, animation, lighting |
-| [web-game-lowpoly-3d](web-game-lowpoly-3d/SKILL.md) | Low-poly / voxel / vector 3D art style |
-| [web-game-3d-assets](web-game-3d-assets/SKILL.md) | Importing itch.io/Blockbench models, GLB pipeline, licensing |
-| [web-game-board-3d](web-game-board-3d/SKILL.md) | Turn-based 3D boards & maps: grids, hex, territory graphs, hidden info, dice |
-| [web-game-platformer-2d](web-game-platformer-2d/SKILL.md) | Side-view platformers: jump feel, ladders, vines, hazards, seeded rooms |
-| [web-game-chess](web-game-chess/SKILL.md) | Chess rules via chess.js, board mapping, PGN |
-| [web-game-hotseat-multiplayer](web-game-hotseat-multiplayer/SKILL.md) | Local 2P: hotseat, alternating, simultaneous; camera rotation |
-| [web-game-audio](web-game-audio/SKILL.md) | Web Audio chip-style SFX and jingles |
-| [web-game-persistence](web-game-persistence/SKILL.md) | High scores, settings, saved games |
+## Docs (human knowledge base)
 
-## Example: 2-player rotating-hotseat 3D chess (low-poly)
+[docs/README.md](docs/README.md) indexes the design theory and project studies (not auto-loaded by agents):
+- [Fun & Design Principles](docs/fun-and-design-principles.md) · [Game Taxonomy](docs/game-taxonomy.md) · [Originality & IP](docs/originality-and-ip.md)
+- [From 2D Boards to 3D Scenes](docs/board-to-3d.md) · [Visualization for Consulting](docs/visualization-for-consulting.md) · [Gamification](docs/gamification.md)
+- [Game Studies](docs/game-studies/README.md): [Chess](docs/game-studies/chess.md), [Hidden-Identity Skirmish](docs/game-studies/hidden-identity-skirmish.md), [Territory Conquest](docs/game-studies/territory-conquest.md), [Jungle Runner](docs/game-studies/jungle-runner.md)
 
-Skills: `web-game-3d` + `web-game-lowpoly-3d` + `web-game-3d-assets` + `web-game-chess` + `web-game-hotseat-multiplayer` + `web-game-state-machine` + `web-game-persistence` + `web-game-audio`.
+## Starter recipe: 2-player rotating-hotseat 3D chess
 
-Assets: [Omies 3D Chess/Checkers Set](https://omies-assets.itch.io/3d-chesscheckers-set). Convert to a single GLB if needed, upload to `public/models/`, and share its node names with the agent (or run `npx gltfjsx`). Keep the paid files out of public repos.
-
-Starter prompt:
-> Build a 2-player hotseat 3D chess game with React Three Fiber using the low-poly set in `/public/models/chess.glb`. Use chess.js for all rules. After each move, animate the piece, then rotate the camera to the other player's side (toggle in settings). Include legal-move highlights, promotion picker, check/checkmate/draw detection, move list, undo, resign, and resume from Dexie. Follow the skills in this repo.
+Load: `web-game-core`, `web-game-3d`, `web-game-board`, `web-game-chess`.
+Assets: [Omies 3D Chess/Checkers Set](https://omies-assets.itch.io/3d-chesscheckers-set) → convert to GLB if needed, place in `public/models/chess.glb`, inspect node names (or run `npx gltfjsx`), and keep paid files out of public repos.

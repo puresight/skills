@@ -1,8 +1,3 @@
----
-name: retro-arcade-fidelity
-description: "Use at the start of any reproduction of a 1970s-1980s arcade or console game (Atari 2600/7800, Intellivision, ColecoVision, NES, Vectrex, arcade cabinets). Covers researching original behavior, native resolution and integer scaling, period palettes, vector vs raster looks, attract mode, credits/start flow, lives and extra-life thresholds, high-score initials entry, difficulty ramps, and legal/IP boundaries. Does not apply to modern-style games with no retro reference."
----
-
 # Retro Arcade & Console Fidelity
 
 The goal is a game that *feels* like the original: same timing, same rules, same screen flow. Get the core loop right before adding polish.
@@ -17,7 +12,7 @@ Mark anything uncertain as "approximate" rather than inventing precise numbers.
 
 ## 2. Resolution & scaling
 - Render to a fixed native-size canvas (or offscreen buffer) and scale up by an **integer** factor with `image-rendering: pixelated`. Letterbox the rest with black.
-- Simulate in native pixel units at a fixed 60 Hz tick (see `web-game-loop-architecture`). Express speeds per tick, matching original "pixels per frame".
+- Simulate in native pixel units at a fixed 60 Hz tick (see `web-game-core/loop.md`). Express speeds per tick, matching original "pixels per frame".
 - Never scale with fractional factors that blur or shimmer pixels.
 
 ## 3. Look
@@ -30,7 +25,7 @@ Mark anything uncertain as "approximate" rather than inventing precise numbers.
 - Attract mode: demo/title cycle when idle; any key or "insert coin" (key `5` or `C`) adds a credit; `1`/`2` starts 1P/2P. Also provide a clear on-screen Start button for touch users.
 - HUD: `1UP` score, `HIGH SCORE`, `2UP`, lives as icons, level indicator.
 - Extra life at a fixed score (commonly 10,000 or 20,000).
-- High score table: top 10 with 3-letter initials entered via joystick-style letter cycling; persist in Dexie (`web-game-persistence`).
+- High score table: top 10 with 3-letter initials entered via joystick-style letter cycling; persist in Dexie (`web-game-core/persistence.md`).
 - Pause (P / Esc) and auto-pause on tab hide — a modern courtesy not in originals.
 
 ## 5. Difficulty
@@ -38,11 +33,11 @@ Mark anything uncertain as "approximate" rather than inventing precise numbers.
 - Use seeded RNG (e.g. a small mulberry32) so behavior is reproducible and testable; some originals were fully deterministic (Pac-Man patterns).
 
 ## 6. Sound
-Square/triangle/noise chip-style sound effects synthesized with Web Audio (`web-game-audio`). No original audio samples.
+Square/triangle/noise chip-style sound effects synthesized with Web Audio (`web-game-core/audio.md`). No original audio samples.
 
 ## 7. Legal / IP
 - Recreate mechanics and style; do not copy ROM data, original sprites, sound samples, or trademarked names/logos into a public release. For personal projects, still prefer an homage title (e.g. "Space Defenders") unless the user says otherwise.
 - Credit inspirations in a Credits screen.
 
 ## Related skills
-`game-design-originality` (naming, IP), `web-game-platformer-2d`, `web-game-canvas-2d` (raster), `web-game-3d` / `web-game-lowpoly-3d` (3D remakes), `web-game-input`, `web-game-state-machine`, `web-game-hotseat-multiplayer`.
+`game-design-brief` (naming, IP), `web-game-platformer`, `web-game-2d/canvas.md` (raster), `web-game-3d` / `web-game-3d/style.md` (3D remakes), `web-game-core/input.md`, `web-game-core/state-machine.md`, `web-game-board/hotseat.md`.
