@@ -1,42 +1,36 @@
 ---
 name: web-game-lowpoly-3d
-description: "Use when building low-poly, voxel, or blocky 3D games with React Three Fiber. Covers fixed-timestep simulation, GLB loading from Blockbench, simple materials, modular entity state, and offline-first architecture. Applies to Battlezone-style tank arenas, blocky combat, low-poly board games, and voxel mazes. Does not apply to photorealistic, high-poly, or pure 2D Canvas games."
+description: "Use for the art direction and rendering style of low-poly, faceted, voxel, blocky, or vector-wireframe 3D games in React Three Fiber: flat shading, small palettes, Blockbench/itch.io low-poly models, procedural primitives, retro vector look (Battlezone, Tempest), and stylized lighting. Applies to low-poly chess sets, tank arenas, voxel mazes. Use together with web-game-3d (engine/scene) and web-game-3d-assets (importing models). Does not apply to photorealistic or pure 2D games."
 ---
 
-# Low-Poly / Blocky 3D Games (React Three Fiber)
+# Low-Poly / Voxel / Vector 3D Style
 
-Use `@react-three/fiber` + `@react-three/drei` on the React 19 + Vite stack. Keep simulation decoupled from rendering.
+General R3F architecture (Canvas, controls, picking, loop) lives in `web-game-3d`. This skill covers the **look**.
 
-## Architecture
-- Fixed-timestep accumulator for simulation (update at fixed rate; interpolate for render).
-- Drive rendering with `useFrame`. Never put simulation, AI, or collision logic inside the render path.
-- Prefer declarative R3F components (`<mesh>`, `<group>`, `useGLTF`).
-- Load models as GLB (Blockbench exports). Place in `/public/models/` or import them.
-- Fully offline after load. Persist scores, settings, and saves with Dexie.
+## 1. Materials
+- `MeshStandardMaterial` with `flatShading` for faceted geometry; roughness 0.6–0.9, metalness 0–0.2. `MeshLambertMaterial` is cheaper and fine for low-poly.
+- Small palette (4–8 colors) defined in one `palette.ts`. Pieces: two materials (light/dark side). Board: two square colors + frame.
+- Prefer vertex colors or a 16×16 palette texture (`NearestFilter`, `colorSpace = SRGBColorSpace`) over many materials.
+- Toon look: `MeshToonMaterial` with a 3-step gradient map (NearestFilter).
 
-## Libraries
-- `@react-three/fiber`, `@react-three/drei` (useGLTF, OrbitControls, Environment, Html, useAnimations).
-- Prefer simple custom collision or lightweight physics for arcade feel. Add `@react-three/rapier` only if rigid-body physics is explicitly needed.
-- Reuse `web-game-loop-architecture`, `web-game-math`, and related skills where concepts transfer.
+## 2. Geometry
+- Imported models: see `web-game-3d-assets` (GLB, normalize scale/pivot, share geometry).
+- No models? Build from primitives with low segment counts: `cylinderGeometry args={[r, r, h, 8]}`, `coneGeometry` with 6–8 radial segments, `icosahedronGeometry detail={0}`. A full chess set can be made from stacked low-segment lathe/cylinder parts as a placeholder.
+- Voxel/Blockbench: boxes with `NearestFilter` textures; merge static voxels (`BufferGeometryUtils.mergeGeometries`) or use `<Instances>`.
 
-## Style & assets
-- Target low-poly, voxel, or blocky aesthetics that match Blockbench cube models.
-- Simple materials (`MeshStandardMaterial` or `MeshBasicMaterial`). Avoid heavy post-processing.
-- Support basic animations via `useAnimations` or direct bone/matrix updates.
-- Favor a small set of reusable models (vehicles, pieces, obstacles, projectiles).
+## 3. Lighting & atmosphere
+- Strong single directional key light + soft ambient/hemisphere fill gives clean faceted shading.
+- Solid or gradient background color (`<color attach="background" />`) and optional `<fog>` matching it.
+- Soft shadows: drei `<ContactShadows>` or `<SoftShadows>`; keep the shadow map small.
+- Post-processing (bloom, outline) only if requested; `@react-three/postprocessing` costs performance on mobile.
 
-## Structure
-- Keep rules, collision, AI, and entity state in plain TypeScript modules outside the React tree when practical.
-- Expose a clean simulation object that R3F components observe.
-- Make models and constants easy to swap so the project can be refined later in Cursor or Antigravity.
+## 4. Retro vector look (Battlezone, Red Baron, Tempest, Star Wars)
+- Black background, `LineSegments` with `EdgesGeometry` (threshold ~20°) and `LineBasicMaterial` in green/cyan/white.
+- Hidden-line removal: render the mesh in black with `polygonOffset`, then edges on top.
+- Glow: additive blending, or `@react-three/postprocessing` `<Bloom>` if allowed.
+- Lines are always 1 px in WebGL; for thick lines use drei `<Line lineWidth>`.
 
-## Constraints
-- Stay inside the global stack (TypeScript strict, Dexie, Zod, Tailwind for UI overlays).
-- Prefer small focused components and minimal dependencies.
-- Deliver a playable core loop first; leave extra models and polish for later iteration.
-
-## Math & geometry
-- Always prefer Three.js built-in math (`Vector3`, `Quaternion`, `Matrix4`, `MathUtils`, `Ray`, `Box3`, `Sphere`) over custom implementations.
-- For additional helpers (random distributions, buffer ops, extra geometry), use `maath`.
-- Do not reimplement vector, quaternion, or matrix math. Reuse `web-game-math` patterns where applicable.
-- Keep heavy geometric calculations in plain TypeScript modules outside the React render path.
+## 5. Constraints
+- Fully offline: no CDN HDRs/fonts/textures; bundle everything in `/public`.
+- Keep model/material/palette constants swappable so art can be iterated later in Cursor or Antigravity.
+- Playable first; art polish second.

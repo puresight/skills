@@ -1,50 +1,70 @@
 ---
 name: web-game-3d
-description: "Use when building 3D games or interactive 3D scenes with React Three Fiber / Three.js. Covers fixed-timestep simulation, model loading (GLB/glTF), camera controls, simple animations, lighting, and offline-first architecture. Applies to chess, board games, arena combat, strategy titles, and general 3D experiences. Does not apply to pure 2D Canvas games or strictly low-poly/voxel-only pipelines."
+description: "Use when building any 3D game or 3D board game with React Three Fiber / Three.js: Canvas setup, camera controls, pointer picking, lighting and shadows, state-driven piece animation, render-on-demand for turn-based games, loading screens, and performance. Applies to 3D chess/checkers, tabletop games, arena combat, and 3D remakes of classic games. Pair with web-game-lowpoly-3d for the faceted/voxel art style and web-game-3d-assets for importing models."
 ---
 
 # 3D Web Games (React Three Fiber)
 
-Use `@react-three/fiber` + `@react-three/drei` on the React 19 + Vite stack. Keep simulation decoupled from rendering.
+Stack: React 19 + Vite + TypeScript strict, `three`, `@react-three/fiber` v9, `@react-three/drei`. Rules and simulation live in plain TS modules; R3F only renders them.
 
-## Architecture
-- Fixed-timestep accumulator for any simulation that needs consistent timing. Interpolate for rendering.
-- Drive the scene with `useFrame`. Keep rules, AI, and heavy logic in plain TypeScript modules outside the React tree.
-- Load models as GLB/glTF via `useGLTF`. Place them in `/public/models/` or import them.
-- Fully offline after load. Persist state with Dexie.
+```bash
+pnpm add three @react-three/fiber @react-three/drei maath
+pnpm add -D @types/three
+```
 
-## Camera & interaction
-- Default to `@react-three/drei` `OrbitControls` for board and tabletop games so the user can freely orbit, pan, and zoom.
-- Limit polar angle and distance when appropriate (e.g. prevent camera from going under the board or too far away).
-- For turn-based games, consider temporarily disabling controls or damping during piece animations.
-- Use pointer raycasting (`useThree` + `Raycaster` or drei helpers) for selecting pieces and squares. Prefer object picking on named meshes or groups.
-- Support both mouse and touch. Keep interaction logic outside the render loop.
+## 1. Canvas setup
+```tsx
+<Canvas shadows dpr={[1, 2]} camera={{ position: [0, 9, 9], fov: 45 }}
+        frameloop={isTurnBased ? "demand" : "always"}>
+  <Suspense fallback={null}><Scene /></Suspense>
+</Canvas>
+<Loader />  {/* drei loading bar, outside Canvas */}
+```
+- Turn-based games: `frameloop="demand"` saves battery; call `invalidate()` while animations run (controls with damping invalidate automatically).
+- Canvas fills its parent; give the parent explicit size (`h-dvh w-full`). HUD/menus are Tailwind DOM overlays on top, not 3D text.
 
-## Animation
-- Prefer simple, state-driven interpolation over complex timelines for piece moves: lerp position and slerp quaternion (or use `damp` from `maath` / `MathUtils`).
-- Drive animations from game-state changes (move started, capture, etc.). Do not put animation logic inside `useFrame` beyond reading the current interpolated transform.
-- Common patterns: lift piece up, slide horizontally, lower; or direct slide with slight arc. Keep duration short (0.2–0.6 s).
-- Use `useAnimations` only when the GLB already contains authored clips. Otherwise stick to code-driven transforms.
-- Ensure animations are interruptible and that the final resting transform matches the logical board state.
+## 2. Camera & controls
+- Board/tabletop: drei `CameraControls` (smooth programmatic moves like `rotateTo`, good for hotseat seat changes) or `OrbitControls` (`enableDamping`, `makeDefault`).
+- Clamp: `minPolarAngle ≈ 0.2`, `maxPolarAngle ≈ 1.35` (never below the board), `minDistance`/`maxDistance`, disable pan or bound it.
+- Disable controls during scripted camera moves; re-enable after.
+- Action games: custom follow/first-person camera updated in `useFrame` from sim state.
 
-## Lighting
-- Start with a simple, performant setup: one directional light (sun) + ambient light + optional soft shadows on the board.
-- Enable shadows only on the board and key pieces; avoid shadow-casting on every small object.
-- Prefer `MeshStandardMaterial` or `MeshPhysicalMaterial` so pieces respond to light. Keep material counts low.
-- For board games, a slightly warm or neutral key light from above-and-to-the-side usually looks better than flat lighting.
-- Avoid heavy post-processing unless explicitly requested.
+## 3. Picking
+- Use mesh pointer events (`onPointerDown`, `onPointerOver`, `onPointerOut`) with `e.stopPropagation()`.
+- Distinguish click vs orbit-drag (pointer moved < 5 px).
+- Board games: clicks resolve to a **square**, whether the user hit a piece or the board. See `web-game-input`.
 
-## Libraries & math
-- `@react-three/fiber`, `@react-three/drei`.
-- Prefer Three.js native math (`Vector3`, `Quaternion`, `Matrix4`, `MathUtils`, `Ray`, `Box3`). Reuse the `web-game-math` skill.
-- Optional: `maath` for damping and extra helpers.
-- Add physics (e.g. Rapier) only when rigid-body behavior is explicitly required.
+## 4. Animation
+- State-driven: game state says where a piece should be; a component damps its mesh toward that target in `useFrame` (`easing.damp3` from `maath/easing`) or runs a short tween (0.25–0.5 s; lift → slide → drop or a parabolic arc).
+- Knights may hop in an arc; captured pieces sink/fade then move to a side tray.
+- On completion, emit "animation done" so the state machine unlocks input. Final transform must equal the logical square exactly.
+- Use `useAnimations` only for clips authored in the GLB.
 
-## Structure
-- Expose a clean simulation or board-state object that R3F components observe.
-- Keep models, materials, lighting, and constants easy to swap.
-- Deliver a playable core loop first.
+## 5. Lighting & materials
+- `ambientLight` (≈0.4) + one `directionalLight` (castShadow, shadow-mapSize 2048, tight shadow camera bounds around the board) + optional `hemisphereLight`.
+- Board `receiveShadow`, pieces `castShadow`. drei `<ContactShadows>` is a cheap, pretty alternative.
+- drei `<Environment preset="...">` loads HDRs from a CDN — not offline-safe. Bundle a local `.hdr` in `/public` or skip it.
+- Selection/legal-move feedback: emissive tint or a flat ring/disc slightly above the square (`polygonOffset` or y+0.01 to avoid z-fighting). drei `<Outlines>` for hover.
 
-## Constraints
-- Stay within the global stack (TypeScript strict, Dexie, Zod, Tailwind for UI overlays).
-- Prefer small focused components and minimal dependencies.
+## 6. Performance
+- Share geometries/materials; use drei `<Instances>` for many identical objects.
+- No object allocation in `useFrame` (reuse temp `Vector3`s at module scope).
+- R3F disposes objects it creates on unmount; dispose manually anything created with `new` outside JSX.
+- Add `<Perf>`/`r3f-perf` only in dev.
+
+## 7. Libraries & math
+- Three.js math classes (`Vector3`, `Quaternion`, `MathUtils`, `Box3`, `Ray`); see `web-game-math`. `maath` for damping.
+- Physics (`@react-three/rapier`) only when rigid bodies are truly needed; board games never need it.
+
+## 8. Structure
+```
+src/game/      rules, state machine, sim (no React, no three)
+src/scene/     Board.tsx, Pieces.tsx, CameraRig.tsx, Lights.tsx
+src/ui/        HUD, menus, dialogs (Tailwind)
+src/db.ts      Dexie
+public/models/ GLB files
+```
+Deliver a playable core loop first; polish after.
+
+## Related
+`web-game-lowpoly-3d`, `web-game-3d-assets`, `web-game-chess`, `web-game-hotseat-multiplayer`, `web-game-state-machine`, `web-game-loop-architecture`.

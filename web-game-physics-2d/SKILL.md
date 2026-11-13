@@ -1,49 +1,46 @@
 ---
 name: "web-game-physics-2d"
-description: "Use when adding rigid-body physics, gravity, friction, restitution, collision impulses, or kinematic movement to a web game. Covers Matter.js and @dimforge/rapier2d-compat in WebContainers. Does not apply to purely cosmetic animations or static board games."
+description: "Use when choosing how to move and collide things in a 2D web game. Covers when to use simple arcade collision (AABB, circle, tile grids — correct for most 1970s-80s games like Pong, Breakout, Space Invaders, Pac-Man, Asteroids) versus a rigid-body engine (Matter.js or @dimforge/rapier2d-compat) for gravity, stacking, joints, and realistic impulses (pinball, physics puzzlers). Includes WebContainer compatibility notes. Does not apply to purely cosmetic animations or static board games."
 ---
 
-# 2D Physics in WebContainers
+# 2D Movement, Collision & Physics
 
-Offload collision detection, resolution, and dynamics to vetted libraries compatible with WebContainer sandboxes.
+## 1. Decide first: arcade or rigid-body?
+Most classic games did NOT use physics engines. Their "feel" comes from simple, deterministic rules. Using Matter.js for Pong or Breakout makes them feel wrong (spin, energy loss, sticky corners).
 
-## 1. Library Selection & Compatibility
+| Game style | Use |
+|---|---|
+| Pong, Breakout, Space Invaders, Galaga, Frogger, Centipede | Custom AABB/circle tests, scripted reflection |
+| Pac-Man, Dig Dug, Bomberman, maze games | Tile-grid movement + grid lookups |
+| Asteroids, Defender | Velocity + wrap-around, circle tests |
+| Donkey Kong, Mario-style platformers | Custom tile collision with axis-separated resolution |
+| Pinball, Angry-Birds-like, stacking, ragdolls, joints | Rigid-body engine |
 
-WebContainers run in-browser Node.js without native C++ compilation (`node-gyp`).
+## 2. Arcade collision rules
+- Move, then resolve **per axis** (move X → resolve X, move Y → resolve Y). Avoids corner snagging.
+- Fast small objects (balls, bullets): sub-step the move or sweep (ray/segment vs box) so they cannot tunnel through thin paddles/bricks.
+- Pong/Breakout paddle bounce: reflection angle comes from hit offset from paddle center (original behavior), not physical reflection. Clamp angle to avoid near-horizontal balls.
+- Keep collision tests in a pure module (`collide.ts`) with unit tests for edge cases.
+- Use squared distances for circle checks; broad-phase with a grid or `rbush` above ~30 objects (see `web-game-math`).
+- Integrate with the fixed timestep only (`web-game-loop-architecture`).
 
-- Default for lightweight/arcade games: `matter-js` (pure TypeScript/JavaScript, no build steps).
+## 3. Rigid-body engines (only when needed)
+WebContainers (Bolt.new) run Node in the browser with no native compilation (`node-gyp`); pick pure-JS or Wasm packages.
+- Lightweight: `matter-js` + `@types/matter-js`.
+- Precision / many bodies / determinism: `@dimforge/rapier2d-compat` (Wasm embedded, works offline).
 
-```bash
-pnpm add matter-js @types/matter-js
-
-```
-
-- Default for precision/high-body-count simulations: `@dimforge/rapier2d-compat` (Wasm-based).
-
-```bash
-pnpm add @dimforge/rapier2d-compat
-
-```
-
-## 2. Rapier Wasm Initialization Rule
-
-When using `@dimforge/rapier2d-compat`, you MUST await the Wasm binary initialization before constructing any world, rigid body, or collider:
-
+Rapier must be initialized before creating anything:
 ```typescript
 import RAPIER from "@dimforge/rapier2d-compat";
-
 export async function initPhysics() {
   await RAPIER.init();
-  const gravity = { x: 0.0, y: -9.81 };
-  const world = new RAPIER.World(gravity);
+  const world = new RAPIER.World({ x: 0, y: -9.81 });
   return { RAPIER, world };
 }
 ```
 
-## 3. Prohibited Patterns
-
-- DO NOT invent custom collision resolution routines (e.g., manually reflecting velocities off circle boundaries with `vx = -vx * elasticity`).
-- DO NOT step physics using variable frame time (`delta` from `requestAnimationFrame`).
-- DO NOT alter physics body positions directly during collision callbacks; apply forces or impulses instead:
-- Good: `body.applyImpulse({ x: 0, y: 15 }, true);`
-- Bad: `body.setTranslation({ x: body.translation().x, y: body.translation().y + 10 });`
+When using an engine:
+- Let the engine resolve collisions; don't hand-write velocity reflection for engine bodies.
+- Step with the fixed timestep (`world.timestep = FIXED_DT; world.step()` / `Engine.update(engine, 1000/60)`), never variable frame delta.
+- Don't teleport bodies in collision callbacks; apply impulses or queue changes for after the step. Teleporting is fine for kinematic bodies and respawns, outside callbacks.
+- Use pixels-to-meters scale (e.g. 1 m = 32 px) for Rapier; it is tuned for meters.
