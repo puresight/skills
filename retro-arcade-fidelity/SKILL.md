@@ -45,4 +45,4 @@ Square/triangle/noise chip-style sound effects synthesized with Web Audio (`web-
 - Credit inspirations in a Credits screen.
 
 ## Related skills
-`web-game-canvas-2d` (raster), `web-game-3d` / `web-game-lowpoly-3d` (3D remakes), `web-game-input`, `web-game-state-machine`, `web-game-hotseat-multiplayer`.
+`game-design-originality` (naming, IP), `web-game-platformer-2d`, `web-game-canvas-2d` (raster), `web-game-3d` / `web-game-lowpoly-3d` (3D remakes), `web-game-input`, `web-game-state-machine`, `web-game-hotseat-multiplayer`.
