@@ -1,6 +1,6 @@
 ---
 name: game-design-brief
-description: "Use when starting of any game project, and when naming the game, characters, units, or locations, choosing art direction, or reimagining a classic board, arcade, or console game. Covers writing a design brief, originality and trademark safety, and retro specs. Does not cover implementation code."
+description: "Use when starting any game project, and when naming the game, characters, units, or locations, choosing art direction, or reimagining a classic board, arcade, or console game. Covers writing a design brief, originality and trademark safety, and retro specs. Does not cover implementation code."
 ---
 
 # Design Brief & Originality
