@@ -4,10 +4,15 @@ Agent skills (Markdown + YAML frontmatter) for building browser reproductions of
 
 **Assumed stack:** React 19 + Vite + TypeScript (strict) + Tailwind, Dexie + Zod for storage, Canvas 2D for raster games, React Three Fiber for 3D. Fully offline after load. Runs in WebContainers (no native Node modules).
 
+## Docs
+
+Design knowledge, principles, and game studies live in [docs/](docs/README.md): fun & design principles, game taxonomy, originality & IP, board-to-3D, visualization for consulting, gamification, and per-project studies.
+
 ## Skills
 
 | Skill | Use for |
 |---|---|
+| [game-design-originality](game-design-originality/SKILL.md) | Start here for any game inspired by a commercial title: design brief, naming, IP-safe reimagining |
 | [retro-arcade-fidelity](retro-arcade-fidelity/SKILL.md) | Start here for any retro remake: spec, resolution, palette, arcade flow, IP |
 | [web-game-loop-architecture](web-game-loop-architecture/SKILL.md) | Fixed-timestep loop, React/R3F integration, pause |
 | [web-game-state-machine](web-game-state-machine/SKILL.md) | Screens and turn phases |
@@ -18,6 +23,8 @@ Agent skills (Markdown + YAML frontmatter) for building browser reproductions of
 | [web-game-3d](web-game-3d/SKILL.md) | R3F scenes, cameras, picking, animation, lighting |
 | [web-game-lowpoly-3d](web-game-lowpoly-3d/SKILL.md) | Low-poly / voxel / vector 3D art style |
 | [web-game-3d-assets](web-game-3d-assets/SKILL.md) | Importing itch.io/Blockbench models, GLB pipeline, licensing |
+| [web-game-board-3d](web-game-board-3d/SKILL.md) | Turn-based 3D boards & maps: grids, hex, territory graphs, hidden info, dice |
+| [web-game-platformer-2d](web-game-platformer-2d/SKILL.md) | Side-view platformers: jump feel, ladders, vines, hazards, seeded rooms |
 | [web-game-chess](web-game-chess/SKILL.md) | Chess rules via chess.js, board mapping, PGN |
 | [web-game-hotseat-multiplayer](web-game-hotseat-multiplayer/SKILL.md) | Local 2P: hotseat, alternating, simultaneous; camera rotation |
 | [web-game-audio](web-game-audio/SKILL.md) | Web Audio chip-style SFX and jingles |
