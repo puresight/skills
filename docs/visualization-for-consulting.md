@@ -38,7 +38,7 @@ Build games with this separation (pure TS rules engine, renderer as a view) and 
 See `gamification.md`. Use progress, feedback, and clear goals to drive adoption of tools — not manipulative loops.
 
 ## 5. Stack crossover
-React + Three.js/R3F for 3D; D3/visx or Recharts for 2D charts; deck.gl or MapLibre for geographic data at scale; Dexie for offline. GeoJSON → `ExtrudeGeometry` is the same pipeline for a Risk-like map and a regional sales map.
+React 19 + **Ark UI** (`@ark-ui/react`) + Tailwind CSS for accessible filters, scrubbers, and split views; Three.js/R3F for 3D; pure-TS `d3-scale`/`d3-array` + SVG/Canvas for 2D charts (`web-dataviz`); deck.gl or MapLibre for geographic data at scale; Dexie + Zod for offline scenario storage. GeoJSON → `ExtrudeGeometry` is the same pipeline for a Risk-like map and a regional sales map. See [dataviz-first-principles.md](dataviz-first-principles.md) for full chart taxonomy and mobile/desktop/TV/print guidelines.
 
 ## 6. Portfolio idea
 Each finished game can yield a client-facing demo: e.g. the territory-conquest map re-skinned as "regional market coverage simulator"; the hidden-information board as "role-based asset tracker".

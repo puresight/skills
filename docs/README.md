@@ -12,6 +12,7 @@ Background knowledge behind the skills in this repo. Skills (`*/SKILL.md`) are s
 
 | Doc | What it covers |
 |---|---|
+| [dataviz-first-principles.md](dataviz-first-principles.md) | First-principles 2D & 3D data visualization guide: taxonomy of charts/diagrams, perceptual channel hierarchy, OkLCH color science, 2D vs 3D tradeoffs, mobile/desktop/TV/print adaptation, and Ark UI architecture |
 | [fun-and-design-principles.md](fun-and-design-principles.md) | Frameworks for fun (MDA, kinds of fun, flow, core loops, feedback), precepts for designing play |
 | [game-taxonomy.md](game-taxonomy.md) | Classification of games and mechanics; where each target project fits |
 | [originality-and-ip.md](originality-and-ip.md) | Idea vs expression, trademarks, trade dress; a repeatable reimagining process |

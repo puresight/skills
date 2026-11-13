@@ -1,10 +1,10 @@
-# Retro & Tabletop Web Game Skills
+# Retro Game, Tabletop & 2D/3D Data Visualization Skills
 
-Consolidated agent skills (Markdown + YAML frontmatter) for building original browser games inspired by 1970s–1980s arcade/console classics and tabletop board games in Bolt.new.
+Consolidated agent skills (Markdown + YAML frontmatter) for building original browser games (inspired by 1970s–1980s arcade/console classics and tabletop board games) and interactive 2D/3D data visualizations across mobile, desktop, television wallboards, and print in Bolt.new, using React 19, **Ark UI** (`@ark-ui/react`), Tailwind CSS, Canvas/SVG, and React Three Fiber.
 
 Start with [AGENTS.md](AGENTS.md) for the global stack and the **project-type → skills routing table**.
 
-## Skills (7)
+## Skills (8)
 
 Each skill has a short `SKILL.md` (loaded when activated) plus sibling `.md` reference/template files (read on demand). All files are pure Markdown.
 
@@ -17,12 +17,13 @@ Each skill has a short `SKILL.md` (loaded when activated) plus sibling `.md` ref
 | [web-game-3d](web-game-3d/SKILL.md) | [scene.md](web-game-3d/scene.md), [style.md](web-game-3d/style.md), [assets.md](web-game-3d/assets.md) | React Three Fiber scenes, low-poly/vector style, GLB asset pipeline |
 | [web-game-board](web-game-board/SKILL.md) | [boards.md](web-game-board/boards.md), [hotseat.md](web-game-board/hotseat.md) | Turn-based 3D grids, hexes, territory maps, hidden units, dice, hotseat |
 | [web-game-chess](web-game-chess/SKILL.md) | [chess-game.md](web-game-chess/chess-game.md) | Chess & checkers rules via `chess.js`, square↔world mapping, PGN |
+| [web-dataviz](web-dataviz/SKILL.md) | [scales-and-charts.md](web-dataviz/scales-and-charts.md), [ark-ui-controls.md](web-dataviz/ark-ui-controls.md), [responsive-devices.md](web-dataviz/responsive-devices.md), [spatial-3d-dataviz.md](web-dataviz/spatial-3d-dataviz.md) | 2D & 3D data visualization, pure-TS scales/LTTB, Ark UI controls, mobile/desktop/TV/print adaptation |
 
 ## Docs (human knowledge base)
 
 [docs/README.md](docs/README.md) indexes the design theory and project studies (not auto-loaded by agents):
-- [Fun & Design Principles](docs/fun-and-design-principles.md) · [Game Taxonomy](docs/game-taxonomy.md) · [Originality & IP](docs/originality-and-ip.md)
-- [From 2D Boards to 3D Scenes](docs/board-to-3d.md) · [Visualization for Consulting](docs/visualization-for-consulting.md) · [Gamification](docs/gamification.md)
+- [First-Principles DataViz Guide](docs/dataviz-first-principles.md) · [From 2D Boards to 3D Scenes](docs/board-to-3d.md) · [Visualization for Consulting](docs/visualization-for-consulting.md)
+- [Fun & Design Principles](docs/fun-and-design-principles.md) · [Game Taxonomy](docs/game-taxonomy.md) · [Originality & IP](docs/originality-and-ip.md) · [Gamification](docs/gamification.md)
 - [Game Studies](docs/game-studies/README.md): [Chess](docs/game-studies/chess.md), [Hidden-Identity Skirmish](docs/game-studies/hidden-identity-skirmish.md), [Territory Conquest](docs/game-studies/territory-conquest.md), [Jungle Runner](docs/game-studies/jungle-runner.md)
 
 ## Starter recipe: 2-player rotating-hotseat 3D chess
