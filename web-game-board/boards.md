@@ -1,8 +1,3 @@
----
-name: web-game-board-3d
-description: "Use when building any turn-based board or map game in 3D with React Three Fiber, beyond chess: square/hex grids, impassable cells, graph-based territory maps (area control / conquest), extruded region polygons, unit stacks with counts, hidden-information pieces with per-player redacted views, setup/deployment phases, dice resolution with seeded RNG, and battle odds. Applies to hidden-rank skirmish games, territory conquest, and other 2D board designs made 3D. Pair with web-game-3d, web-game-state-machine, and web-game-hotseat-multiplayer."
----
-
 # Turn-Based 3D Boards & Maps
 
 Background and design principles: `docs/board-to-3d.md`.
@@ -54,18 +49,18 @@ const Territory = z.object({
 - Track "known to opponent" flags so revealed units stay marked.
 
 ## 5. Phases
-Typical flow (implement with `web-game-state-machine`):
+Typical flow (implement with `web-game-core/state-machine.md`):
 `setup (each player, private) → [turn: reinforce → act/attack → move/fortify → end] → victory`.
 - Setup: drag units onto allowed rows/territories; offer **Random** and **Preset** buttons; validate before confirm.
-- Long games: autosave after every action (`web-game-persistence`).
+- Long games: autosave after every action (`web-game-core/persistence.md`).
 
 ## 6. Dice & randomness
-- All randomness from a seeded PRNG stored in game state (save/load reproduces results; enables replays). See `web-game-math`.
+- All randomness from a seeded PRNG stored in game state (save/load reproduces results; enables replays). See `web-game-core/math.md`.
 - Decide results first, then animate dice to show them (scripted tumble ending on the known face). Never let physics decide outcomes.
 - Show odds before committing (e.g. attacker win probability via precomputed table or quick Monte Carlo of 2,000 trials). Teaches players and builds trust.
 
 ## 7. Camera
-- 2-player: seat per player, rotate on handoff (`web-game-hotseat-multiplayer`).
+- 2-player: seat per player, rotate on handoff (`web-game-board/hotseat.md`).
 - 3+ players on a map: fixed overhead tilted camera with orbit; brief focus moves to battles.
 - Orthographic option for strategy maps reduces perspective distortion.
 

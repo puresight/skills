@@ -1,8 +1,3 @@
----
-name: web-game-lowpoly-3d
-description: "Use for the art direction and rendering style of low-poly, faceted, voxel, blocky, or vector-wireframe 3D games in React Three Fiber: flat shading, small palettes, Blockbench/itch.io low-poly models, procedural primitives, retro vector look (Battlezone, Tempest), and stylized lighting. Applies to low-poly chess sets, tank arenas, voxel mazes. Use together with web-game-3d (engine/scene) and web-game-3d-assets (importing models). Does not apply to photorealistic or pure 2D games."
----
-
 # Low-Poly / Voxel / Vector 3D Style
 
 General R3F architecture (Canvas, controls, picking, loop) lives in `web-game-3d`. This skill covers the **look**.
@@ -14,7 +9,7 @@ General R3F architecture (Canvas, controls, picking, loop) lives in `web-game-3d
 - Toon look: `MeshToonMaterial` with a 3-step gradient map (NearestFilter).
 
 ## 2. Geometry
-- Imported models: see `web-game-3d-assets` (GLB, normalize scale/pivot, share geometry).
+- Imported models: see `web-game-3d/assets.md` (GLB, normalize scale/pivot, share geometry).
 - No models? Build from primitives with low segment counts: `cylinderGeometry args={[r, r, h, 8]}`, `coneGeometry` with 6–8 radial segments, `icosahedronGeometry detail={0}`. A full chess set can be made from stacked low-segment lathe/cylinder parts as a placeholder.
 - Voxel/Blockbench: boxes with `NearestFilter` textures; merge static voxels (`BufferGeometryUtils.mergeGeometries`) or use `<Instances>`.
 

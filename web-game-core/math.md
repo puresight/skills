@@ -1,8 +1,3 @@
----
-name: web-game-math
-description: "Use when implementing 2D or 3D geometry, vectors, matrices, quaternions, raycasts, coordinate transforms, angles, distance checks, or spatial queries in browser games. Prefers Three.js math classes when React Three Fiber is in use; otherwise uses gl-matrix. Covers destination-passing style, squared distances, proper angle handling, and spatial indexing. Does not apply to full rigid-body dynamics or pure UI CSS positioning."
----
-
 # Web Game Math & Spatial Invariants
 
 Enforce deterministic, allocation-light math. Never hand-write vector, matrix, or quaternion arithmetic.

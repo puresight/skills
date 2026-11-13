@@ -1,8 +1,3 @@
----
-name: web-game-state-machine
-description: "Use when structuring a game's screens and phases: attract/title, menu, ready, playing, paused, life lost, level clear, game over, high-score entry, and turn phases (select piece, animating, promotion, check) in board games. Covers a typed finite state machine in plain TypeScript, timed transitions, and bridging to React UI. Does not cover entity AI behavior trees."
----
-
 # Game Flow State Machine
 
 Ad-hoc booleans (`isPaused`, `isGameOver`, `showMenu`, `isAnimating`) cause impossible states. Use one discriminated union.

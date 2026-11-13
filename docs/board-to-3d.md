@@ -37,7 +37,7 @@ Bad reasons: "because 3D looks modern". If height or perspective encodes nothing
 | Dice | Physical-looking dice tumbling (scripted, results pre-determined by seeded RNG) |
 
 ## 4. Camera choreography
-- Each player has a **seat** (see `web-game-hotseat-multiplayer`); rotate between seats on turn change.
+- Each player has a **seat** (see `web-game-board/hotseat.md`); rotate between seats on turn change.
 - **Focus moves**: briefly dolly toward a battle, then return. Keep < 1 s; skippable.
 - Clamp angles so the user can't get lost; provide "reset view".
 - Respect `prefers-reduced-motion`.
@@ -48,6 +48,6 @@ Bad reasons: "because 3D looks modern". If height or perspective encodes nothing
 - See `visualization-for-consulting.md`.
 
 ## 6. Technical notes
-- Grid ↔ world mapping as pure functions (see `web-game-chess` pattern; generalized in `web-game-board-3d`).
+- Grid ↔ world mapping as pure functions (see `web-game-chess` pattern; generalized in `web-game-board`).
 - Graph maps: store territories as data (id, polygon, centroid, neighbors) separate from meshes.
 - Hit targets larger than visuals; raycast against invisible tile planes.

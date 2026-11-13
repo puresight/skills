@@ -1,8 +1,3 @@
----
-name: web-game-canvas-2d
-description: "Use when rendering a 2D raster or vector arcade game in the browser with Canvas 2D (or PixiJS for many sprites): pixel-perfect integer scaling, sprite sheets, procedurally drawn pixel sprites, tilemaps/mazes, bitmap fonts, vector line glow, and mounting a canvas inside React. Does not apply to 3D scenes (use web-game-3d)."
----
-
 # 2D Canvas Rendering for Retro Games
 
 ## 1. Canvas inside React

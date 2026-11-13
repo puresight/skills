@@ -1,8 +1,3 @@
----
-name: web-game-input
-description: "Use when handling player controls in a browser game: keyboard (with key codes and edge detection), Gamepad API, on-screen touch joystick/buttons, mouse/pointer, 2-player key splits, remapping, and preventing page scroll. Includes an action-map pattern that decouples devices from game logic. Does not cover text form input."
----
-
 # Game Input
 
 ## 1. Action map, not keys

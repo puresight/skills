@@ -1,8 +1,3 @@
----
-name: game-design-originality
-description: "Use at the very start of any game inspired by an existing commercial game (board game, arcade, or console title), and whenever naming the game, its characters, units, or locations, or choosing art direction. Ensures the result reimagines design principles without copying protected expression or trademarks. Also use when writing a game design brief. Public-domain games (chess, checkers, Go) are exempt from renaming but still need original assets."
----
-
 # Original Reimagining (IP-safe Design)
 
 Full background: `docs/originality-and-ip.md`, `docs/fun-and-design-principles.md`.

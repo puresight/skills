@@ -1,8 +1,3 @@
----
-name: web-game-hotseat-multiplayer
-description: "Use when building local multiplayer on one device: rotating hotseat turns (chess, board games, artillery games), alternating-player arcade games (player 1 / player 2 take turns like classic arcade cabinets), or simultaneous 2-player on a shared keyboard/gamepads. Covers turn handoff, rotating the camera or board to the active player, per-player state, and handoff screens. Does not cover online/networked multiplayer."
----
-
 # Local Multiplayer (Hotseat & Shared Screen)
 
 ## 1. Pick the mode explicitly
@@ -45,7 +40,7 @@ export const SEATS = {
 - Default keyboard split: P1 = WASD + Space/F, P2 = Arrow keys + Enter/Right-Ctrl. Make it remappable.
 - Assign gamepads by connection order; show "P1 controller connected".
 - Watch for keyboard ghosting: avoid needing >3 simultaneous keys per player.
-See `web-game-input`.
+See `web-game-core/input.md`.
 
 ## 6. Persist
 Save the in-progress match (players' names, colors, full move history/PGN, settings) to Dexie so a reload resumes the same game.

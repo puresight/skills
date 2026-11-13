@@ -1,8 +1,3 @@
----
-name: web-game-persistence
-description: "Use when saving game data in the browser: high-score tables with initials, settings (volume, key bindings, CRT filter, auto-rotate), in-progress saves/resume (e.g. chess PGN), and match history. Uses Dexie (IndexedDB) with Zod validation and schema versioning. Does not cover cloud sync or accounts."
----
-
 # Persistence (Dexie + Zod)
 
 ```bash

@@ -1,8 +1,3 @@
----
-name: "web-game-loop-architecture"
-description: "Use when architecting real-time game loops: fixed time-stepping with an accumulator, render interpolation, input polling per tick, pause and tab-visibility handling, starting/stopping loops safely in React (StrictMode), and running fixed-step simulation inside React Three Fiber's useFrame. Applies to Canvas, PixiJS, and R3F action games. Does not apply to purely turn-based games (use web-game-state-machine) beyond their animations."
----
-
 # Real-Time Game Loop & State Architecture
 
 Decouple simulation rate from display refresh rate. A 144 Hz monitor must not make the game run faster.
@@ -60,7 +55,7 @@ Mutate `ref.current.position` directly — never `setState` inside `useFrame`.
 - Retro pixel games often look more authentic **without** interpolation (snap to integer pixels).
 
 ## 5. Input
-- Buffer keyboard, pointer, and Gamepad input in listeners; consume inside the fixed `update` tick; clear one-shot "pressed" flags at the end of each tick. See `web-game-input`.
+- Buffer keyboard, pointer, and Gamepad input in listeners; consume inside the fixed `update` tick; clear one-shot "pressed" flags at the end of each tick. See `web-game-core/input.md`.
 
 ## 6. Pause & visibility
 - Auto-pause on `document.visibilitychange` (hidden) and window `blur`; reset `last` on resume so there's no time jump.

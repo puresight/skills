@@ -1,11 +1,6 @@
----
-name: web-game-platformer-2d
-description: "Use when building a side-view platformer or platform-adventure in the browser (early-80s console style like jungle runners, ladder-and-girder games): run/jump physics with tuned feel, coyote time and jump buffering, ladders, swinging ropes/vines, pits and timed hazards, rolling obstacles, screen-flip rooms or scrolling camera, seeded procedural room generation, timers and treasures. Works with Canvas 2D or a 2.5D R3F side camera. Does not cover top-down or physics-engine puzzle games."
----
-
 # Side-View Platformers
 
-Use custom kinematic movement (not a physics engine) — classic platformers are hand-tuned rules. Simulate at fixed 60 Hz (`web-game-loop-architecture`).
+Use custom kinematic movement (not a physics engine) — classic platformers are hand-tuned rules. Simulate at fixed 60 Hz (`web-game-core/loop.md`).
 
 ## 1. Player state machine
 `idle | run | jump | fall | climb | swing | hurt | dead`. Each state allows specific inputs. No boolean soup.
@@ -15,7 +10,7 @@ Use custom kinematic movement (not a physics engine) — classic platformers are
 - Jump: fixed arc for classic (no air control or limited), or variable height (cut upward velocity on release) for modern.
 - Gravity applied per tick; clamp max fall speed.
 - **Coyote time** (~6 ticks after leaving a ledge, jump still allowed) and **jump buffer** (~6 ticks before landing) — invisible, makes controls feel fair. Optional for strict retro mode.
-- Collision: axis-separated against solid tiles/rects (`web-game-physics-2d`). Use a hitbox smaller than the sprite for hazards (forgiving), exact for floors.
+- Collision: axis-separated against solid tiles/rects (`web-game-2d/collision.md`). Use a hitbox smaller than the sprite for hazards (forgiving), exact for floors.
 
 ## 3. Ladders
 - Enter climb when overlapping ladder and pressing up/down; snap x to ladder center.
@@ -61,7 +56,7 @@ export const decode = (c: number) => ({
 Verify the inverse step with a unit test (`nextRoom(nextRoom(c, 1), -1) === c` for all 255 non-zero codes); adjust taps if it fails. Or use `mulberry32(seed + roomIndex)` for simplicity. Design your own bit layout — don't copy an original's room table.
 
 ## 8. Game frame
-Countdown timer (e.g. 20:00), score, lives, treasures remaining, minimap of visited rooms. Death → brief pause → respawn at room's safe entry point. Game over → high-score initials (`retro-arcade-fidelity`, `web-game-persistence`).
+Countdown timer (e.g. 20:00), score, lives, treasures remaining, minimap of visited rooms. Death → brief pause → respawn at room's safe entry point. Game over → high-score initials (`web-game-2d/retro-arcade.md`, `web-game-core/persistence.md`).
 
 ## 9. 2.5D variant (R3F)
 Gameplay stays 2D (x, y) in the sim; render low-poly 3D meshes with an orthographic or narrow-FOV side camera at fixed z. Parallax via background layers at different z.

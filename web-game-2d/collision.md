@@ -1,8 +1,3 @@
----
-name: "web-game-physics-2d"
-description: "Use when choosing how to move and collide things in a 2D web game. Covers when to use simple arcade collision (AABB, circle, tile grids — correct for most 1970s-80s games like Pong, Breakout, Space Invaders, Pac-Man, Asteroids) versus a rigid-body engine (Matter.js or @dimforge/rapier2d-compat) for gravity, stacking, joints, and realistic impulses (pinball, physics puzzlers). Includes WebContainer compatibility notes. Does not apply to purely cosmetic animations or static board games."
----
-
 # 2D Movement, Collision & Physics
 
 ## 1. Decide first: arcade or rigid-body?
@@ -21,8 +16,8 @@ Most classic games did NOT use physics engines. Their "feel" comes from simple, 
 - Fast small objects (balls, bullets): sub-step the move or sweep (ray/segment vs box) so they cannot tunnel through thin paddles/bricks.
 - Pong/Breakout paddle bounce: reflection angle comes from hit offset from paddle center (original behavior), not physical reflection. Clamp angle to avoid near-horizontal balls.
 - Keep collision tests in a pure module (`collide.ts`) with unit tests for edge cases.
-- Use squared distances for circle checks; broad-phase with a grid or `rbush` above ~30 objects (see `web-game-math`).
-- Integrate with the fixed timestep only (`web-game-loop-architecture`).
+- Use squared distances for circle checks; broad-phase with a grid or `rbush` above ~30 objects (see `web-game-core/math.md`).
+- Integrate with the fixed timestep only (`web-game-core/loop.md`).
 
 ## 3. Rigid-body engines (only when needed)
 WebContainers (Bolt.new) run Node in the browser with no native compilation (`node-gyp`); pick pure-JS or Wasm packages.
